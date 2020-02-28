@@ -109,6 +109,6 @@
             <!-- End Contact Form -->
         </div>
         <!-- Footer -->
-        <footer class="navbar navbar-expand-lg navbar-dark bg-primary" style='color: FFFFFF; position:fixed; bottom:0; width:100%; height:50px; display:inline-block; text-align:center;'> Corrado Alfano - Software Developer </footer>
+        <footer class="navbar navbar-expand-lg navbar-dark bg-primary" style='color: #FFFFFF; position:fixed; bottom:0; width:100%; height:50px; display:inline-block; text-align:center;'> Corrado Alfano - Software Developer </footer>
     </body>
 </html>
