@@ -1,24 +1,60 @@
 <?php
-    // Messahe Vars
+    // Message Vars
     $msg ='';
     $msgClass ='';
     // Check For Submit
     if(filter_has_var(INPUT_POST, 'submit')){
         // Get Data
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        $message = $_POST['message'];
+        $name = htmlspecialchars($_POST['name']);
+        $email = htmlspecialchars($_POST['email']);
+        $message = htmlspecialchars($_POST['message']);
 
         // Check For Required Fields
         if(!empty($name) && !empty($email) && !empty($message) ){
             // Passed
-            echo 'Passed';
+            //
+            // Check Email
+            if(filter_var($email, FILTER_VALIDATE_EMAIL) === false){
+                // Failed
+                $msg = 'Please use a valid email address';
+                $msgClass = 'alert-danger';
+            } else {
+                // Passed
+                //
+                // Recipient Email
+                $toEmail = 'corrado.alfano10@gmail.com';
+                $subject = 'Contact Request From ' .$name;
+                $body = '<h2>Contact Request</h2>
+                         <h4>Name</h4><p>'.$name.'</p>
+                         <h4>Name</h4><p>'.$email.'</p>
+                         <h4>Name</h4><p>'.$message.'</p>
+                        ';
+                //
+                // Email Headers
+                $headers = "MIME-Version: 1.0" ."\r\n";
+                // .= means appending onto the existing variable, it will not replace variable value, it will add to it!
+                $headers .="Content-Type:text/html;charset=UTF-8" . "\r\n";
+                //
+                // Additional Headers
+                // // .= means appending onto the existing variable, it will not replace variable value, it will add to it!
+                $headers .= "From: " .$name. "<".$email.">". "\r\n";
 
+                if(mail($toEmail, $subject, $body, $headers)) {
+                    // Email Sent
+                    //
+                    $msg = "Your email has been sent successfully!";
+                    $msgClass = "alert-success";
+                } else {
+                    // Failed
+                    //
+                    $msg = "Unfortunately, your email did not go through!";
+                    $msgClass = "alert-danger";
+                }
+            }
         } else {
             // Failed
             $msg = 'Please fill in all fields';
             $msgClass = 'alert-danger';
-
         }
     }
 ?>
@@ -53,19 +89,19 @@
                  <div class="form-group">
                      <!-- User Name -->
                     <label>Name</label>
-                    <input type="text" name="name" class="form-control" value="">
+                    <input type="text" name="name" class="form-control" value="<?php echo isset($name) ? $name : ''; ?>">
                     <small id="emailHelp" class="form-text text-muted">We'll never share your name with anyone else.</small>
                 </div>
                 <div class="form-group">
-                    <!-- User Email Adress -->
-                    <label>Email address</label>
-                    <input type="text" name="email" class="form-control" value="">
+                    <!-- User Email Address -->
+                    <label>Email Address</label>
+                    <input type="text" name="email" class="form-control" value="<?php echo isset($email) ? $email : ''; ?>">
                     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                 </div>
                 <div class="form-group">
                     <!-- User Message -->
                     <label>Message</label>
-                    <textarea name="message" class="form-control"></textarea>
+                    <textarea name="message" class="form-control"><?php echo isset($message) ? $message : ''; ?></textarea>
                 </div>
                 <br>
                 <button type="submit" name ="submit" class="btn btn-primary">Submit</button>
