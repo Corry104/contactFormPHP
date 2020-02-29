@@ -88,7 +88,7 @@
             <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                  <div class="form-group">
                      <!-- User Name -->
-                    <label>Name</label>
+                    <label>Full Name</label>
                     <input type="text" name="name" class="form-control" value="<?php echo isset($name) ? $name : ''; ?>">
                     <small id="emailHelp" class="form-text text-muted">We'll never share your name with anyone else.</small>
                 </div>
